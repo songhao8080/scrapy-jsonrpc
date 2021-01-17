@@ -34,8 +34,51 @@ The endpoint for accessing the crawler object is::
 
     http://localhost:6080/crawler
 
-
-![20210117184440](https://allen-hz-bucket.oss-cn-hangzhou.aliyuncs.com/blog/upload/20210117184440_1610880298372.png?x-oss-process=style/allen)
+The Api Response:
+```text
+[
+    {
+        "time()-engine.start_time": 4.3701982498168945,
+        "engine.has_capacity()": false,
+        "len(engine.downloader.active)": 10,
+        "engine.scraper.is_idle()": false,
+        "engine.spider.name": "zhihu",
+        "engine.spider_is_idle(engine.spider)": false,
+        "engine.slot.closing": false,
+        "len(engine.slot.inprogress)": 29,
+        "len(engine.slot.scheduler.dqs or [])": 0,
+        "len(engine.slot.scheduler.mqs)": 1,
+        "len(engine.scraper.slot.queue)": 0,
+        "len(engine.scraper.slot.active)": 19,
+        "engine.scraper.slot.active_size": 258036,
+        "engine.scraper.slot.itemproc_size": 0,
+        "engine.scraper.slot.needs_backout()": false
+    },
+    {
+        "Request": "30 oldest: 3s ago",
+        "TextResponse": "19 oldest: 3s ago",
+        "TestSpider": "1 oldest: 4s ago"
+    },
+    {
+        "log_count/INFO": 27,
+        "start_time": "2021-01-17 10:39:02",
+        "log_count/ERROR": 3,
+        "scheduler/enqueued/memory": 35,
+        "scheduler/enqueued": 35,
+        "scheduler/dequeued/memory": 34,
+        "scheduler/dequeued": 34,
+        "downloader/request_count": 34,
+        "downloader/request_method_count/GET": 34,
+        "downloader/request_bytes": 28923,
+        "downloader/response_count": 24,
+        "downloader/response_status_count/200": 24,
+        "downloader/response_bytes": 100766,
+        "response_received_count": 24,
+        "request_depth_max": 3,
+        "item_scraped_count": 2
+    }
+]
+```
 
 
 Settings
