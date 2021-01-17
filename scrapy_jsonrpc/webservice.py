@@ -10,7 +10,6 @@ from scrapy_jsonrpc.jsonrpc import jsonrpc_server_call
 from scrapy_jsonrpc.serialize import ScrapyJSONEncoder, ScrapyJSONDecoder
 from scrapy_jsonrpc.txweb import JsonResource as JsonResource_
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -20,6 +19,7 @@ class JsonResource(JsonResource_):
         JsonResource_.__init__(self)
         self.crawler = crawler
         self.json_encoder = ScrapyJSONEncoder(crawler=crawler)
+
 
 class JsonRpcResource(JsonResource):
 
@@ -50,7 +50,6 @@ class JsonRpcResource(JsonResource):
 
 
 class CrawlerResource(JsonRpcResource):
-
     ws_name = 'crawler'
 
     def __init__(self, crawler):
@@ -62,10 +61,10 @@ class RootResource(JsonResource):
     def render_GET(self, txrequest):
         return {'resources': self.children.keys()}
 
-    def getChild(self, name, txrequest):
+    def getChild(self, name, request):
         if name == '':
             return self
-        return JsonResource.getChild(self, name, txrequest)
+        return JsonResource.getChild(self, name, request)
 
 
 class WebService(server.Site):
@@ -78,7 +77,7 @@ class WebService(server.Site):
         self.portrange = [int(x) for x in crawler.settings.getlist('JSONRPC_PORT', [6023, 6073])]
         self.host = crawler.settings.get('JSONRPC_HOST', '127.0.0.1')
         root = RootResource(crawler)
-        root.putChild('crawler', CrawlerResource(self.crawler))
+        root.putChild(b'crawler', CrawlerResource(self.crawler))
         server.Site.__init__(self, root, logPath=logfile)
         self.noisy = False
         crawler.signals.connect(self.start_listening, signals.engine_started)
@@ -90,10 +89,9 @@ class WebService(server.Site):
 
     def start_listening(self):
         self.port = listen_tcp(self.portrange, self.host, self)
-        logger.debug(
+        logger.info(
             'Web service listening on {host.host:s}:{host.port:d}'.format(
                 host=self.port.getHost()))
 
     def stop_listening(self):
         self.port.stopListening()
-

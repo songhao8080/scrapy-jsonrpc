@@ -5,9 +5,9 @@ http://groups.google.com/group/json-rpc/web/json-rpc-2-0
 
 import json
 import traceback
-from six.moves import urllib
+import urllib
 
-from scrapy.utils.python import unicode_to_str
+from w3lib.util import unicode_to_str
 from scrapy_jsonrpc.serialize import ScrapyJSONDecoder
 
 

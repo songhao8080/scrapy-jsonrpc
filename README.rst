@@ -1,17 +1,17 @@
-==============
-scrapy-jsonrpc
-==============
+==================
+scrapy-jsonrpc-api
+==================
 
 scrapy-jsonrpc is an extension to control a running Scrapy web crawler via
-JSON-RPC. The service provides access to the main Crawler object via the
-`JSON-RPC 2.0`_ protocol.
+JSON-RPC.
 
 Installation
 ============
 
 Install scrapy-jsonrpc using ``pip``::
 
-    $ pip install scrapy-jsonrpc
+    $ pip install scrapy-jsonrpc-api -i https://pypi.python.org/simple/
+
 
 Configuration
 =============
@@ -35,12 +35,8 @@ The endpoint for accessing the crawler object is::
     http://localhost:6080/crawler
 
 
-Example client
-==============
+![20210117184440](https://allen-hz-bucket.oss-cn-hangzhou.aliyuncs.com/blog/upload/20210117184440_1610880298372.png?x-oss-process=style/allen)
 
-There is a command line tool provided for illustration purposes on how to build
-a client. You can find it in ``example-client.py``. It supports a few basic
-commands such as listing the running spiders, etc.
 
 Settings
 ========

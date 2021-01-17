@@ -3,11 +3,11 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='scrapy-jsonrpc',
-    version='0.3.0',
-    url='https://github.com/scrapy/scrapy-jsonrpc',
-    description='Scrapy extenstion to control spiders using JSON-RPC',
-    author='Scrapy developers',
+    name='scrapy-jsonrpc-api',
+    version='1.0.0',
+    url='https://github.com/xiayus/scrapy-jsonrpc',
+    description='Scrapy extenstion to control spiders using JSON-RPC By Allen',
+    author='Scrapy developers,Allen',
     license='BSD',
     packages=find_packages(exclude=('tests', 'tests.*')),
     include_package_data=True,
@@ -26,7 +26,9 @@ setup(
     ],
     install_requires=[
         'Twisted>=10.0.0',
-        'Scrapy>=0.24.0',
-        'six>=1.5.2',
+        'Scrapy>=2.4.0',
+        'six>=1.15.0',
+        'w3lib>=1.22.0',
+        'urllib3>=1.26.2',
     ],
 )
