@@ -18,10 +18,14 @@ class JsonResource(resource.Resource):
         ext = format_engine_status_test(obj.engine)
         # 获取各个排列状态
         refs = format_live_refs_test()
-        #获取所有统计信息：
+        # 获取所有统计信息：
         stats = obj.stats.get_stats()
-        list = [ext, refs, stats]
-        r = self.json_encoder.encode(list)
+        # fix encode error
+        stats_str = {}
+        for k, v in stats.items():
+            stats_str[k.decode()] = v.decode()
+        list_data = [ext, refs, stats_str]
+        r = self.json_encoder.encode(list_data)
         sb = bytes(r, encoding="utf8")
         txrequest.setHeader('Content-Type', 'application/json')
         txrequest.setHeader('Access-Control-Allow-Origin', '*')
