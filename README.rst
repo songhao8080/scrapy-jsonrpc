@@ -1,5 +1,5 @@
 ==================
-scrapy-jsonrpc-api
+scrapy-jsonrpc-api-py3
 ==================
 
 scrapy-jsonrpc is an extension to control a running Scrapy web crawler via
@@ -10,7 +10,7 @@ Installation
 
 Install scrapy-jsonrpc using ``pip``::
 
-    $ pip install scrapy-jsonrpc-api -i https://pypi.python.org/simple/
+    $ pip install scrapy-jsonrpc-api-py3 -i https://pypi.python.org/simple/
 
 
 Configuration
@@ -26,59 +26,76 @@ First, you need to include the entension to your ``EXTENSIONS`` dict in
 Then, you need to enable the extension with the `JSONRPC_ENABLED`_ setting,
 set to ``True``.
 
+
+
 The web server will listen on a port specified in `JSONRPC_PORT`_
-(by default, it will try to listen on port 6080),
+(by default, it will try to listen on port 6023),
 and will log to the file specified in `JSONRPC_LOGFILE`_.
+eg ::
+    EXTENSIONS = {
+        'scrapy_jsonrpc.webservice.WebService': 500,
+    }
+    JSONRPC_HOST = "0.0.0.0"
+    JSONRPC_ENABLED = True
+    JSONRPC_PORT = [6023,6025]
+
+
 
 The endpoint for accessing the crawler object is::
 
-    http://localhost:6080/crawler
+    http://localhost:6023/crawler
 
-The Api Response:
-```text
-[
-    {
-        "time()-engine.start_time": 4.3701982498168945,
-        "engine.has_capacity()": false,
-        "len(engine.downloader.active)": 10,
-        "engine.scraper.is_idle()": false,
-        "engine.spider.name": "zhihu",
-        "engine.spider_is_idle(engine.spider)": false,
-        "engine.slot.closing": false,
-        "len(engine.slot.inprogress)": 29,
-        "len(engine.slot.scheduler.dqs or [])": 0,
-        "len(engine.slot.scheduler.mqs)": 1,
-        "len(engine.scraper.slot.queue)": 0,
-        "len(engine.scraper.slot.active)": 19,
-        "engine.scraper.slot.active_size": 258036,
-        "engine.scraper.slot.itemproc_size": 0,
-        "engine.scraper.slot.needs_backout()": false
-    },
-    {
-        "Request": "30 oldest: 3s ago",
-        "TextResponse": "19 oldest: 3s ago",
-        "TestSpider": "1 oldest: 4s ago"
-    },
-    {
-        "log_count/INFO": 27,
-        "start_time": "2021-01-17 10:39:02",
-        "log_count/ERROR": 3,
-        "scheduler/enqueued/memory": 35,
-        "scheduler/enqueued": 35,
-        "scheduler/dequeued/memory": 34,
-        "scheduler/dequeued": 34,
-        "downloader/request_count": 34,
-        "downloader/request_method_count/GET": 34,
-        "downloader/request_bytes": 28923,
-        "downloader/response_count": 24,
-        "downloader/response_status_count/200": 24,
-        "downloader/response_bytes": 100766,
-        "response_received_count": 24,
-        "request_depth_max": 3,
-        "item_scraped_count": 2
-    }
-]
-```
+The Api Response::
+
+
+    [
+        {
+            "engine.has_capacity()": false,
+            "engine.scraper.is_idle()": false,
+            "engine.scraper.slot.active_size": 0,
+            "engine.scraper.slot.itemproc_size": 0,
+            "engine.scraper.slot.needs_backout()": false,
+            "engine.slot.closing": false,
+            "engine.spider.name": "myspider_redis",
+            "engine.spider_is_idle(engine.spider)": true,
+            "len(engine.downloader.active)": 0,
+            "len(engine.scraper.slot.active)": 0,
+            "len(engine.scraper.slot.queue)": 0,
+            "len(engine.slot.inprogress)": 0,
+            "len(engine.slot.scheduler.dqs or [])": "AttributeError (exception)",
+            "len(engine.slot.scheduler.mqs)": "AttributeError (exception)",
+            "time()-engine.start_time": 57.646450996398926
+        },
+        {
+            "MySpider1": "1 oldest: 58s ago"
+        },
+        {
+            "downloader/request_bytes": "272",
+            "downloader/request_count": "2",
+            "downloader/request_method_count/GET": "2",
+            "downloader/response_bytes": "41687",
+            "downloader/response_count": "1",
+            "downloader/response_status_count/200": "1",
+            "elapsed_time_seconds": "574.571709",
+            "finish_reason": "shutdown",
+            "finish_time": "1649382464.844018",
+            "httpcompression/response_bytes": "246926",
+            "httpcompression/response_count": "1",
+            "item_scraped_count": "1",
+            "log_count/CRITICAL": "8",
+            "log_count/DEBUG": "3",
+            "log_count/ERROR": "6",
+            "log_count/INFO": "155",
+            "memusage/max": "102772736",
+            "memusage/startup": "76910592",
+            "response_received_count": "1",
+            "scheduler/dequeued/redis": "2",
+            "scheduler/enqueued/redis": "2",
+            "start_time": "1649382467.72047"
+        }
+    ]
+
+
 
 
 Settings
